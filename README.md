@@ -1,1 +1,1 @@
-# VP-projekt
+# Vizualizacija podataka - projekt
