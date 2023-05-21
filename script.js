@@ -1,4 +1,4 @@
-[
+const data=[
   {
     "": 0,
     "rallyid": 1,
@@ -930,4 +930,203 @@
     "x": 6.49,
     "y": 16.64
   }
-]
+];
+
+
+      
+const svg = d3.select("#tennis-court");
+      
+const DjokovicData=[];
+const NadalData=[]
+
+const Djokovic1Data=[]
+const Djokovic2Data=[]
+const Djokovic3Data=[]
+const Nadal1Data=[]
+const Nadal2Data=[]
+const Nadal3Data=[]
+
+data.forEach(item=>{
+  if(item.server==="Djokovic"){
+    DjokovicData.push(item);
+  } else if(item.server==="Nadal"){
+    NadalData.push(item);
+  }
+});
+
+DjokovicData.forEach(item=>{
+   if(item.rallyid<=64 && item.rallyid>0){
+    Djokovic1Data.push(item);
+  }else if(item.rallyid>64 && item.rallyid<=128){
+    Djokovic2Data.push(item);
+  }else if(item.rallyid>=130 && item.rallyid<=206){
+    Djokovic3Data.push(item);
+  }
+});
+NadalData.forEach(item=>{
+  if(item.rallyid<=64 && item.rallyid>0){
+    Nadal1Data.push(item);
+  }else if(item.rallyid>64 && item.rallyid<=128){
+    Nadal2Data.push(item);
+  }else if(item.rallyid>=130 && item.rallyid<=206){
+    Nadal3Data.push(item);
+  }
+});
+
+const height_court =219.4;
+const width_court = 118.9 * 4;
+const service_box = 125;
+const double_field = 27.4;
+const baseline_serviceline = 110;
+const breite_einzel = 164.6;
+const serviceline_net = 125;
+
+    // Court outline
+svg
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", height_court)
+    .attr("height", width_court)
+    .attr("fill", "#5581A6")
+    .attr("stroke", "white");
+  
+  // Net
+svg
+    .append("line")
+    .attr("x1", height_court)
+    .attr("y1", width_court / 2)
+    .attr("x2", 0)
+    .attr("y2", width_court / 2)
+    .attr("stroke", "white");
+  
+  // Serving rectangle
+svg
+    .append("rect")
+    .attr("x", double_field)
+    .attr("y", baseline_serviceline)
+    .attr("width", breite_einzel)
+    .attr("height", serviceline_net * 2)
+    .attr("fill", "none")
+    .attr("stroke", "white");
+  
+  // Service lines
+svg
+    .append("line")
+    .attr("x1", height_court / 2)
+    .attr("y1", width_court / 2 - service_box)
+    .attr("x2", height_court / 2)
+    .attr("y2", width_court / 2 + service_box)
+    .attr("stroke", "white");
+
+svg
+    .append("line")
+    .attr("x1", height_court / 2)
+    .attr("y1", 0)
+    .attr("x2", height_court / 2)
+    .attr("y2", 0 + 0.45)
+    .attr("stroke", "white");
+
+svg
+    .append("line")
+    .attr("x1", height_court / 2)
+    .attr("y1", width_court)
+    .attr("x2", height_court / 2)
+    .attr("y2", width_court - 0.45)
+    .attr("stroke", "white");
+
+svg
+    .append("line")
+    .attr("x1", double_field)
+    .attr("y1", 0)
+    .attr("x2", double_field)
+    .attr("y2", width_court)
+    .attr("stroke", "white");
+
+svg
+    .append("line")
+    .attr("x1", height_court - double_field)
+    .attr("y1", 0)
+    .attr("x2", height_court - double_field)
+    .attr("y2", width_court)
+    .attr("stroke", "white");
+
+
+function update(data) {
+  // Remove existing tennis balls
+  svg.selectAll(".tennis-ball")
+  .transition()
+  .duration(500)
+  .attr("r",0)
+  .remove();
+
+  // Draw tennis balls based on the new data
+  const tennisBalls = svg.selectAll(".tennis-ball")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("class", "tennis-ball")
+    .attr("cx", d => d.x*20) // x-koordinata iz podataka
+    .attr("cy", d => d.y*20) // y-koordinata iz podataka
+    .attr("r", 0) // veličina lopte
+    .attr("fill", "yellow") // boja lopte
+    .attr("stroke", "black") // boja ruba lopte
+    .attr("stroke-width", 1) // debljina ruba lopte
+    .transition()
+    .duration(1000) // Trajanje tranzicije u milisekundama
+    .attr("r", 3)
+    .attr("fill", d => {
+      // Provjeriti uvjet za položaj lopte unutar ili izvan polja za serviranje
+      if (
+        d.x*20 >= 0 && d.x*20 <= height_court &&
+        d.y*20 >= 0 && d.y*20 <= width_court &&
+        d.x*20 >= double_field && d.x*20 <= (double_field + breite_einzel) &&
+        d.y*20 >= baseline_serviceline && d.y*20 <= (baseline_serviceline + serviceline_net * 2)
+        ){
+        // Loptica je unutar terena
+        // Lopta je unutar polja za serviranje, obojati je žutom bojom
+        return "yellow";
+      } else {
+        // Lopta je izvan polja za serviranje, obojati je crvenom bojom
+        return "red";
+      }
+    });
+   
+}
+
+// Button click event handlers
+function handleButtonClick(buttonId) {
+  if (buttonId === "button-djokovic") {
+    update(DjokovicData); // Display Djokovic's data
+  } else if (buttonId === "button-nadal") {
+    update(NadalData); // Display Nadal's data
+  }else if (buttonId === "button-djokovic1") {
+    update(Djokovic1Data); // Display Nadal's data
+  }
+  else if (buttonId === "button-djokovic2") {
+    update(Djokovic2Data); // Display Nadal's data
+  }
+  else if (buttonId === "button-djokovic3") {
+    update(Djokovic3Data); // Display Nadal's data
+  }else if (buttonId === "button-nadal1") {
+    update(Nadal1Data); // Display Nadal's data
+  }else if (buttonId === "button-nadal2") {
+    update(Nadal2Data); // Display Nadal's data
+  }else if (buttonId === "button-nadal3") {
+    update(Nadal3Data); // Display Nadal's data
+  }
+  
+}
+
+// Add event listeners to the buttons
+document.getElementById("button-djokovic").addEventListener("click", () => handleButtonClick("button-djokovic"));
+document.getElementById("button-nadal").addEventListener("click", () => handleButtonClick("button-nadal"));
+document.getElementById("button-djokovic1").addEventListener("click", () => handleButtonClick("button-djokovic1"));
+document.getElementById("button-djokovic2").addEventListener("click", () => handleButtonClick("button-djokovic2"));
+document.getElementById("button-djokovic3").addEventListener("click", () => handleButtonClick("button-djokovic3"));
+document.getElementById("button-nadal1").addEventListener("click", () => handleButtonClick("button-nadal1"));
+document.getElementById("button-nadal2").addEventListener("click", () => handleButtonClick("button-nadal2"));
+document.getElementById("button-nadal3").addEventListener("click", () => handleButtonClick("button-nadal3"));
+
+
+
