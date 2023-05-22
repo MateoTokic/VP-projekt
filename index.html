@@ -4,7 +4,31 @@
     <meta charset="utf-8">
     <title>Teniski teren</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    
+    <style>
+      .slice path {
+        fill-opacity: 0.7;
+      }
+  
+      .legend {
+        font-size: 12px;
+      }
+      .tooltip-window {
+      position: absolute;
+      pointer-events: none;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .tooltip-window.active {
+      opacity: 1;
+    }
+
+    </style>
     
   </head>
   <body>
@@ -21,9 +45,14 @@
     
     <!-- Create a div where the graph will take place -->
     <div id="my_dataviz"></div>
-    <svg id="tennis-court" width="1000" height="1000"></svg>
+    <svg id="tennis-court" width="500" height="500"></svg>
     <p id="accuracy"></p>
+    <div id="line-chart" style="position: relative;">
+      <div class="tooltip-window"></div>
+    </div>
+    
     <svg id="barchart" width="300" height="200"></svg>
+    <svg id="pie-chart"  width="400" height="300"></svg>
     
 
 <script src="script.js"></script>
