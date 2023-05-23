@@ -13,47 +13,69 @@
         font-size: 12px;
       }
       .tooltip-window {
-      position: absolute;
-      pointer-events: none;
-      background-color: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      padding: 8px;
-      font-size: 12px;
-      border-radius: 4px;
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out;
-    }
+        position: absolute;
+        pointer-events: none;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        padding: 8px;
+        font-size: 12px;
+        border-radius: 4px;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+      }
 
-    .tooltip-window.active {
-      opacity: 1;
-    }
+      .tooltip-window.active {
+        opacity: 1;
+      }
+
+      .container {
+        display: flex;
+        margin-top: 80px;
+        gap: 20px;
+      }
+
+      .container > div {
+        flex: 1;
+      }
+
+      #line-chart {
+        position: relative;
+      }
+
+      .button-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+      }
 
     </style>
-    
   </head>
   <body>
-
-    <!-- Add 2 buttons -->
-    <button id="button-djokovic">Đoković</button>
-    <button id="button-nadal">Nadal</button>
-    <button id="button-djokovic1">Đoković 1st set</button>
-    <button id="button-djokovic2">Đoković 2nd set</button>
-    <button id="button-djokovic3">Đoković 3rd set</button>
-    <button id="button-nadal1">Nadal 1st set</button>
-    <button id="button-nadal2">Nadal 2nd set</button>
-    <button id="button-nadal3">Nadal 3rd set</button>
     
-    <!-- Create a div where the graph will take place -->
-    <div id="my_dataviz"></div>
-    <svg id="tennis-court" width="500" height="500"></svg>
-    <p id="accuracy"></p>
-    <div id="line-chart" style="position: relative;">
-      <div class="tooltip-window"></div>
+    <div class="button-container">
+     
+      <button id="button-djokovic">Đoković</button>
+      <button id="button-nadal">Nadal</button>
+      <button id="button-1stset">1st set</button>
+      <button id="button-2ndset">2nd set</button>
+      <button id="button-3rdset">3rd set</button>
+      
     </div>
-    
-    <svg id="barchart" width="300" height="200"></svg>
-    <svg id="pie-chart"  width="400" height="300"></svg>
-    
 
-<script src="script.js"></script>
-</body>
+    <div class="container">
+      <div>
+        <svg id="tennis-court" width="500" height="500"></svg>
+      </div>
+      <div>
+        <div id="line-chart">
+          <div class="tooltip-window"></div>
+        </div>
+        <svg id="barchart" width="300" height="200"></svg>
+        <svg id="pie-chart"  width="400" height="300"></svg>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
