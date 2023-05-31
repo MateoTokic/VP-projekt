@@ -2,9 +2,29 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Teniski teren</title>
+    <title>AO 2019</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
+      *{
+        background-color:#D5DBDB;
+      }
+      .topic{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 10px;
+        height:8em;
+        color: rgba(2, 0, 20, 0.8);
+      }
+
+      .content{
+        position: absolute;
+        top: 100;
+        padding: 10px;
+      }
+
+
       .slice path {
         fill-opacity: 0.7;
       }
@@ -42,40 +62,104 @@
         position: relative;
       }
 
-      .button-container {
+      .button1-container {
         position: absolute;
-        top: 0;
+        top: 10;
         left: 0;
         padding: 10px;
+        
+       
       }
+
+      .button2-container {
+        position: absolute;
+        top: 10;
+        right: 0;
+        padding: 10px;
+        
+      }
+      #button-djokovic{
+        color: black;
+        background-color: #85929E;
+        border-radius: 0.5em;
+        height: 4em;
+        width: 5em;
+      }
+      #button-nadal{
+        color: black;
+        background-color: #85929E;
+        border-radius: 0.5em;
+        height: 4em;
+        width: 5em;
+      }
+      #button-1stset{
+        color: black;
+        background-color: #85929E;
+        border-radius: 0.5em;
+        height: 4em;
+        width: 5em;
+      }
+      #button-2ndset{
+        color: black;
+        background-color: #85929E;
+        border-radius: 0.5em;
+        height: 4em;
+        width: 5em;
+      }
+      #button-3rdset{
+        color: black;
+        background-color: #85929E;
+        border-radius: 0.5em;
+        height: 4em;
+        width: 5em;
+      }
+      #tennis-court{
+        top:20;
+      }
+
+
 
     </style>
   </head>
   <body>
-    
-    <div class="button-container">
+    <div class="topic">
+      <h1>
+        AUSTRALIAN OPEN 2019 - FINAL
+      </h1>
+      <h2>
+        Đoković 3:2 Nadal
+      </h2>
+    </div>
+    <div class="content">
+    <div class="button1-container">
      
       <button id="button-djokovic">Đoković</button>
       <button id="button-nadal">Nadal</button>
+      
+      
+    </div>
+    <div class="button2-container">
       <button id="button-1stset">1st set</button>
       <button id="button-2ndset">2nd set</button>
       <button id="button-3rdset">3rd set</button>
-      
     </div>
 
     <div class="container">
       <div>
-        <svg id="tennis-court" width="500" height="500"></svg>
+        <svg id="tennis-court" width="400" height="500"></svg>
       </div>
       <div>
         <div id="line-chart">
           <div class="tooltip-window"></div>
         </div>
         <svg id="barchart" width="300" height="200"></svg>
-        <svg id="pie-chart"  width="400" height="300"></svg>
+
+        <svg id="pie-chart"  width="500" height="500"></svg>
+
+        
       </div>
     </div>
-
+  </div>
     <script src="script.js"></script>
   </body>
 </html>

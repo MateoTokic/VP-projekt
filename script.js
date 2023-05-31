@@ -31,7 +31,7 @@ function createCourt(serves){
     const breite_einzel = 164.6;
     const serviceline_net = 125;
 
-        // Court outline
+       
     svg_court
         .append("rect")
         .attr("x", 0)
@@ -41,7 +41,7 @@ function createCourt(serves){
         .attr("fill", "#5581A6")
         .attr("stroke", "white");
       
-      // Net
+
       svg_court
         .append("line")
         .attr("x1", height_court)
@@ -50,7 +50,7 @@ function createCourt(serves){
         .attr("y2", width_court / 2)
         .attr("stroke", "white");
       
-      // Serving rectangle
+
       svg_court
         .append("rect")
         .attr("x", double_field)
@@ -60,7 +60,7 @@ function createCourt(serves){
         .attr("fill", "none")
         .attr("stroke", "white");
       
-      // Service lines
+   
       svg_court
         .append("line")
         .attr("x1", height_court / 2)
@@ -103,7 +103,7 @@ function createCourt(serves){
 
 
       const zoom = d3.zoom()
-      .scaleExtent([1, 4])
+      .scaleExtent([1, 1.5])
       .on("zoom", zoomed);
     
       svg_court.call(zoom);
@@ -122,15 +122,6 @@ function createCourt(serves){
 
     function update(data) {
 
-      svg_court.selectAll(".tennis-ball")
-      .transition()
-      .duration(500)
-      .attr("r",0)
-      .remove();
-      svg_court.selectAll("text")
-      .remove();
-
-
       const tennisBalls = svg_court.selectAll(".tennis-ball")
         .data(data)
         .enter()
@@ -143,7 +134,7 @@ function createCourt(serves){
         .attr("stroke", "black") 
         .attr("stroke-width", 1) 
         .transition()
-        .duration(1000) 
+        .duration(500) 
         .attr("r", 3)
         .attr("fill", d => {
           
@@ -176,8 +167,17 @@ function createCourt(serves){
 
 function handleButtonClick(buttonId) {
   if (buttonId === "button-djokovic") {
+    svg_court.selectAll(".tennis-ball")
+      .remove();
+
+      svg_court.selectAll("text")
+      .remove();
     update(DjokovicData); 
   } else if (buttonId === "button-nadal") {
+    svg_court.selectAll(".tennis-ball")
+      .remove();
+      svg_court.selectAll("text")
+      .remove();
     update(NadalData); 
   } 
   
@@ -245,6 +245,10 @@ function pointsVisual(){
     .style("font-size", "16px")
     .text("Player Points Won");
 
+    const colors = d3.scaleOrdinal(["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"]);
+
+
+
   svg_barchart
     .selectAll("rect")
     .data(Object.entries(playerWins))
@@ -254,7 +258,7 @@ function pointsVisual(){
     .attr("y", d => yScale(d[1]))
     .attr("width", xScale.bandwidth())
     .attr("height", d => height - margin.bottom - yScale(d[1]))
-    .attr("fill", "green")
+    .attr("fill", (d, i) => colors(i))
     .on("mouseover", (event, d) => {
       svg_barchart
         .append("text")
@@ -340,7 +344,7 @@ d3.json("events.json")
     .attr("transform", d => `translate(${arc.centroid(d)})`)
     .attr("dy", "0.35em")
     .attr("text-anchor", "middle")
-    .text(d => d.data.serve)
+    .text(d => d.data.count)
     .attr("class", "pie-label")
     .style("opacity", 0);
 
@@ -376,7 +380,7 @@ d3.json("events.json")
         .duration(200)
         .style("opacity", 1);
 
-      const percentage = ((d.data.count / serveData.reduce((sum, serve) => sum + serve.count, 0)) * 100).toFixed(2);
+
 
       d3.select(this)
         .append("text")
@@ -455,10 +459,15 @@ function createLinechart(time){
     .domain(time.map(d => d.rallyid))
     .range([0, chartWidth])
     .padding(0.1);
+    
+
 
   const yScale = d3.scaleLinear()
     .domain([0, d3.max(time, d => d.totaltime)])
     .range([chartHeight, 0]);
+
+  
+    
 
 
   const line = d3.line()
@@ -473,13 +482,25 @@ function createLinechart(time){
       .duration(500)
       .attr("opacity", 0)
       .remove();
-      chart.selectAll(".axis").remove();
-
-      chart.selectAll(".data-point")
-      .transition()
-      .duration(500)
+    chart.selectAll(".axis")
       .remove();
-      chart.selectAll(".text").remove();
+    chart.selectAll(".data-point")
+      .remove();
+
+    chart.selectAll(".text")
+      .remove();
+
+    
+    chart.selectAll(".x-axis")
+      .remove();
+
+
+    chart.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0, ${chartHeight})`)
+    .call(d3.axisBottom(xScale).tickValues(xScale.domain().filter((d, i) => (i + 1) % 5 === 0)));
+
+ 
       
 
 
@@ -493,10 +514,6 @@ function createLinechart(time){
       .duration(500)
       .attr("opacity", 1);
     
-    
-    chart.append("g")
-      .attr("transform", `translate(0, ${chartHeight})`)
-      .call(d3.axisBottom(xScale));
     
     
     chart.append("g")
