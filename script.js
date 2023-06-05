@@ -4,8 +4,9 @@ var serves=[];
 d3.json("serves.json")
 .then(function(data) {
   serves=data;
-  createCourt(serves);
   lineChart();
+  createCourt(serves);
+  
 });
 
 function createCourt(serves){
@@ -169,7 +170,6 @@ function handleButtonClick(buttonId) {
   if (buttonId === "button-djokovic") {
     svg_court.selectAll(".tennis-ball")
       .remove();
-
       svg_court.selectAll("text")
       .remove();
     update(DjokovicData); 
@@ -181,14 +181,11 @@ function handleButtonClick(buttonId) {
     update(NadalData); 
   } 
   
-  
 }
 
 
 document.getElementById("button-djokovic").addEventListener("click", () => handleButtonClick("button-djokovic"),);
 document.getElementById("button-nadal").addEventListener("click", () => handleButtonClick("button-nadal"));
-
-
 
 }
 
@@ -419,6 +416,7 @@ d3.json("points.json")
 .then(function(data) {
   time=data;
   createLinechart(time);
+  
 });
 
 
@@ -451,60 +449,60 @@ function createLinechart(time){
     .attr("height", height);
 
 
-  const chart = svg_linechart.append("g")
+  /*const chart = svg_linechart.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
+*/
 
   const xScale = d3.scaleBand()
     .domain(time.map(d => d.rallyid))
     .range([0, chartWidth])
     .padding(0.1);
-    
+    svg_linechart.append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0, ${chartHeight})`)
+    .call(d3.axisBottom(xScale).tickValues(xScale.domain().filter((d, i) => (i + 1) % 5 === 0)));
+
 
 
   const yScale = d3.scaleLinear()
     .domain([0, d3.max(time, d => d.totaltime)])
     .range([chartHeight, 0]);
-
-  
-    
+    svg_linechart.append("g")
+    .call(d3.axisLeft(yScale));
 
 
   const line = d3.line()
     .x(d => xScale(d.rallyid) + xScale.bandwidth() / 2)
     .y(d => yScale(d.totaltime));
 
-
-    function updateLinechart(time) {
-      
-      chart.selectAll(".line")
-      .transition()
-      .duration(500)
-      .attr("opacity", 0)
-      .remove();
-    chart.selectAll(".axis")
-      .remove();
-    chart.selectAll(".data-point")
-      .remove();
-
-    chart.selectAll(".text")
-      .remove();
-
+    svg_linechart.append("text")
+    .attr("x", chartWidth / 2)
+    .attr("y", chartHeight + margin.bottom - 5)
+    .attr("text-anchor", "middle")
+    .text("Point No");
     
-    chart.selectAll(".x-axis")
-      .remove();
+    
+    svg_linechart.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -chartHeight / 2)
+    .attr("y", -margin.left)
+    .attr("dy", "1em")
+    .attr("text-anchor", "middle")
+    .text("Time");
+    
+    
+    svg_linechart.append("text")
+    .attr("x", chartWidth / 2)
+    .attr("y", -margin.top / 2)
+    .attr("text-anchor", "middle")
+    .text(" Duration of Points");
+    
 
 
-    chart.append("g")
-    .attr("class", "x-axis")
-    .attr("transform", `translate(0, ${chartHeight})`)
-    .call(d3.axisBottom(xScale).tickValues(xScale.domain().filter((d, i) => (i + 1) % 5 === 0)));
 
- 
-      
+  function updateLinechart(time) {
 
-
-      chart.append("path")
+    svg_linechart.append("path")
       .datum(time)
       .attr("fill", "none")
       .attr("stroke", "steelblue")
@@ -514,39 +512,11 @@ function createLinechart(time){
       .duration(500)
       .attr("opacity", 1);
     
-    
-    
-    chart.append("g")
-      .call(d3.axisLeft(yScale));
-    
-    
-    chart.append("text")
-      .attr("x", chartWidth / 2)
-      .attr("y", chartHeight + margin.bottom - 5)
-      .attr("text-anchor", "middle")
-      .text("Point No");
-    
-    
-    chart.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("x", -chartHeight / 2)
-      .attr("y", -margin.left)
-      .attr("dy", "1em")
-      .attr("text-anchor", "middle")
-      .text("Time");
-    
-    
-    chart.append("text")
-      .attr("x", chartWidth / 2)
-      .attr("y", -margin.top / 2)
-      .attr("text-anchor", "middle")
-      .text(" Duration of Points");
-    
-      const tooltip = d3.select("#line-chart")
+    const tooltip = d3.select("#line-chart")
       .append("div")
       .attr("class", "tooltip-window");
     
-    chart.selectAll(".data-point")
+      svg_linechart.selectAll(".data-point")
       .data(time)
       .enter()
       .append("circle")
@@ -578,11 +548,34 @@ function createLinechart(time){
 
     function handleButtonClick2(buttonId) {
       if (buttonId === "button-1stset") {
+        svg_linechart.selectAll(".data-point")
+        .remove(); 
+        svg_linechart.selectAll(".line")
+      .transition()
+      .duration(500)
+      .attr("opacity", 0)
+      .remove();
         updateLinechart(set1);
       } else if (buttonId === "button-2ndset"){
+        svg_linechart.selectAll(".data-point")
+        .remove(); 
+        svg_linechart.selectAll(".line")
+      .transition()
+      .duration(500)
+      .attr("opacity", 0)
+      .remove();
         updateLinechart(set2);
+       
       } else if (buttonId === "button-3rdset"){
+        svg_linechart.selectAll(".data-point")
+        .remove(); 
+        svg_linechart.selectAll(".line")
+      .transition()
+      .duration(500)
+      .attr("opacity", 0)
+      .remove();
         updateLinechart(set3);
+        
       }
       
     }
