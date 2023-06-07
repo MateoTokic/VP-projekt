@@ -1,4 +1,4 @@
-
+////servisi
 var serves=[];
 
 d3.json("serves.json")
@@ -11,106 +11,106 @@ d3.json("serves.json")
 function createCourt(serves){
 
   const DjokovicData=[];
-    const NadalData=[]
+  const NadalData=[]
 
-    serves.forEach(item=>{
-      if(item.server==="Djokovic"){
-        DjokovicData.push(item);
-      } else {
-        NadalData.push(item);
-      }
-    });
+  serves.forEach(item=>{
+    if(item.server==="Djokovic"){
+      DjokovicData.push(item);
+    } else {
+      NadalData.push(item);
+    }
+  });
 
-    const svg_court = d3.select("#tennis-court");
+  const svg_court = d3.select("#tennis-court");
 
-    const height_court =219.4;
-    const width_court = 118.9 * 4;
-    const service_box = 125;
-    const double_field = 27.4;
-    const baseline_serviceline = 110;
-    const breite_einzel = 164.6;
-    const serviceline_net = 125;
+  const height_court =219.4;
+  const width_court = 118.9 * 4;
+  const service_box = 125;
+  const double_field = 27.4;
+  const baseline_serviceline = 110;
+  const breite_einzel = 164.6;
+  const serviceline_net = 125;
 
        
+  svg_court
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", height_court)
+    .attr("height", width_court)
+    .attr("fill", "#5581A6")
+    .attr("stroke", "white");
+      
+
     svg_court
-        .append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", height_court)
-        .attr("height", width_court)
-        .attr("fill", "#5581A6")
-        .attr("stroke", "white");
+      .append("line")
+      .attr("x1", height_court)
+      .attr("y1", width_court / 2)
+      .attr("x2", 0)
+      .attr("y2", width_court / 2)
+      .attr("stroke", "white");
       
 
-      svg_court
-        .append("line")
-        .attr("x1", height_court)
-        .attr("y1", width_court / 2)
-        .attr("x2", 0)
-        .attr("y2", width_court / 2)
-        .attr("stroke", "white");
-      
-
-      svg_court
-        .append("rect")
-        .attr("x", double_field)
-        .attr("y", baseline_serviceline)
-        .attr("width", breite_einzel)
-        .attr("height", serviceline_net * 2)
-        .attr("fill", "none")
-        .attr("stroke", "white");
+    svg_court
+      .append("rect")
+      .attr("x", double_field)
+      .attr("y", baseline_serviceline)
+      .attr("width", breite_einzel)
+      .attr("height", serviceline_net * 2)
+      .attr("fill", "none")
+      .attr("stroke", "white");
       
    
-      svg_court
-        .append("line")
-        .attr("x1", height_court / 2)
-        .attr("y1", width_court / 2 - service_box)
-        .attr("x2", height_court / 2)
-        .attr("y2", width_court / 2 + service_box)
-        .attr("stroke", "white");
+    svg_court
+      .append("line")
+      .attr("x1", height_court / 2)
+      .attr("y1", width_court / 2 - service_box)
+      .attr("x2", height_court / 2)
+      .attr("y2", width_court / 2 + service_box)
+      .attr("stroke", "white");
 
-        svg_court
-        .append("line")
-        .attr("x1", height_court / 2)
-        .attr("y1", 0)
-        .attr("x2", height_court / 2)
-        .attr("y2", 0 + 0.45)
-        .attr("stroke", "white");
+    svg_court
+      .append("line")
+      .attr("x1", height_court / 2)
+      .attr("y1", 0)
+      .attr("x2", height_court / 2)
+      .attr("y2", 0 + 0.45)
+      .attr("stroke", "white");
 
-        svg_court
-        .append("line")
-        .attr("x1", height_court / 2)
-        .attr("y1", width_court)
-        .attr("x2", height_court / 2)
-        .attr("y2", width_court - 0.45)
-        .attr("stroke", "white");
+    svg_court
+      .append("line")
+      .attr("x1", height_court / 2)
+      .attr("y1", width_court)
+      .attr("x2", height_court / 2)
+      .attr("y2", width_court - 0.45)
+      .attr("stroke", "white");
 
-        svg_court
-        .append("line")
-        .attr("x1", double_field)
-        .attr("y1", 0)
-        .attr("x2", double_field)
-        .attr("y2", width_court)
-        .attr("stroke", "white");
+    svg_court
+      .append("line")
+      .attr("x1", double_field)
+      .attr("y1", 0)
+      .attr("x2", double_field)
+      .attr("y2", width_court)
+      .attr("stroke", "white");
 
-        svg_court
-        .append("line")
-        .attr("x1", height_court - double_field)
-        .attr("y1", 0)
-        .attr("x2", height_court - double_field)
-        .attr("y2", width_court)
-        .attr("stroke", "white");
+    svg_court
+      .append("line")
+      .attr("x1", height_court - double_field)
+      .attr("y1", 0)
+      .attr("x2", height_court - double_field)
+      .attr("y2", width_court)
+      .attr("stroke", "white");
 
 
-      const zoom = d3.zoom()
+    const zoom = d3.zoom()
       .scaleExtent([1, 1.5])
       .on("zoom", zoomed);
     
-      svg_court.call(zoom);
+    svg_court.call(zoom);
     
-      function zoomed(event) {
-        svg_court.attr("transform", event.transform);
-      }
+    function zoomed(event) {
+      svg_court.attr("transform", event.transform);
+    }
 
     let redBallsCount=0;
     let yellowBallsCount=0;
@@ -122,7 +122,7 @@ function createCourt(serves){
 
     function update(data) {
 
-      const tennisBalls = svg_court.selectAll(".tennis-ball")
+      const tennisBalls = svg_court.selectAll(".tennis-ball")                //isrctavanje loptica
         .data(data)
         .enter()
         .append("circle")
@@ -136,14 +136,12 @@ function createCourt(serves){
         .transition()
         .duration(500) 
         .attr("r", 3)
-        .attr("fill", d => {
-          
-          if (
-            d.x*20 >= 0 && d.x*20 <= height_court &&
-            d.y*20 >= 0 && d.y*20 <= width_court &&
-            d.x*20 >= double_field && d.x*20 <= (double_field + breite_einzel) &&
-            d.y*20 >= baseline_serviceline && d.y*20 <= (baseline_serviceline + serviceline_net * 2)
-            ){
+        .attr("fill", d => {  
+          if (d.x*20 >= 0 && d.x*20 <= height_court &&
+              d.y*20 >= 0 && d.y*20 <= width_court &&
+              d.x*20 >= double_field && d.x*20 <= (double_field + breite_einzel) &&
+              d.y*20 >= baseline_serviceline && d.y*20 <= (baseline_serviceline + serviceline_net * 2)
+              ){                                                                                        //uvjeti za in
             yellowBallsCount++;
             totalBallsCount++;
             return "yellow";
@@ -156,12 +154,11 @@ function createCourt(serves){
         redBallsPercentage=(redBallsCount / totalBallsCount) * 100;
         yellowBallsPercentage = (yellowBallsCount / totalBallsCount) * 100;
         accuracyText=`In: ${yellowBallsPercentage.toFixed(2)}%, Out: ${redBallsPercentage.toFixed(2)}%`;
-        svg_court
-        .append("text")
-        .attr("x", height_court / 2)
-        .attr("y", width_court + 20)
-        .attr("text-anchor", "middle")
-        .text(accuracyText);
+        svg_court.append("text")
+          .attr("x", height_court / 2)
+          .attr("y", width_court + 20)
+          .attr("text-anchor", "middle")
+          .text(accuracyText);
     }
 
 
@@ -169,13 +166,13 @@ function handleButtonClick(buttonId) {
   if (buttonId === "button-djokovic") {
     svg_court.selectAll(".tennis-ball")
       .remove();
-      svg_court.selectAll("text")
+    svg_court.selectAll("text")
       .remove();
     update(DjokovicData); 
   } else if (buttonId === "button-nadal") {
     svg_court.selectAll(".tennis-ball")
       .remove();
-      svg_court.selectAll("text")
+    svg_court.selectAll("text")
       .remove();
     update(NadalData); 
   } 
@@ -191,6 +188,7 @@ document.getElementById("button-nadal").addEventListener("click", () => handleBu
 }
 
 
+/////barchart
 var points=[];
 
 d3.json("points.json")
@@ -218,32 +216,28 @@ function pointsVisual(){
   const margin = { top: 40, right: 20, bottom: 30, left: 40 };
 
 
-  const xScale = d3
-    .scaleBand()
+  const xScale = d3.scaleBand()      //diskretna skala
     .domain(Object.keys(playerWins))
     .range([margin.left, width - margin.right])
     .padding(0.1);
 
-  const yScale = d3
-    .scaleLinear()
+  const yScale = d3.scaleLinear()    //linearna skala
     .domain([0, d3.max(Object.values(playerWins))])
     .range([height - margin.bottom, margin.top]);
 
-  const svg_barchart = d3
-    .select("#barchart")
+  const svg_barchart = d3.select("#barchart")
     .append("svg")
     .attr("width", width)
-    .attr("height", height)
-  ;
-  svg_barchart
-    .append("text")
+    .attr("height", height);
+
+  svg_barchart.append("text")
     .attr("x", width / 2)
     .attr("y", margin.top /4 )
     .attr("text-anchor", "middle")
     .style("font-size", "16px")
-    .text("Player Points Won");
+    .text("Player Points Won");    //naslov
 
-    const colors = d3.scaleOrdinal(["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"]);
+  const colors = d3.scaleOrdinal(["#1b9e77","#d95f02","#7570b3","#e7298a","#66a61e","#e6ab02","#a6761d","#666666"]);
 
 
 
@@ -258,12 +252,11 @@ function pointsVisual(){
     .attr("height", d => height - margin.bottom - yScale(d[1]))
     .attr("fill", (d, i) => colors(i))
     .on("mouseover", (event, d) => {
-      svg_barchart
-        .append("text")
+      svg_barchart.append("text")
         .attr("x", xScale(d[0]) + xScale.bandwidth() / 2 ) 
         .attr("y", yScale(d[1]) - 5)
         .attr("text-anchor", "middle")
-        .text(d[1]+"%")
+        .text(d[1]+"%")              //postotak svakog stupca
         .attr("class", "value-tooltip");
     })
     .on("mouseout", () => {
@@ -271,20 +264,18 @@ function pointsVisual(){
     });
 
 
-  svg_barchart
-    .append("g")
+  svg_barchart.append("g")
     .attr("transform", `translate(0,${height - margin.bottom})`)
     .call(d3.axisBottom(xScale));
 
-  svg_barchart
-    .append("g")
+  svg_barchart.append("g")
     .attr("transform", `translate(${margin.left},0)`)
     .call(d3.axisLeft(yScale));
 
 
 }
 
-
+////piechart
 var events=[];
 
 d3.json("events.json")
@@ -365,7 +356,7 @@ d3.json("events.json")
     .attr("dy", ".35em")
     .text(d => d.data.serve);
 
-    function handleMouseOver(d) {
+  function handleMouseOver(d) {
       d3.select(this)
         .select(".pie-slice")
         .transition()
@@ -385,12 +376,12 @@ d3.json("events.json")
         .attr("class", "pie-percentage")
         .attr("text-anchor", "middle")
         .attr("dy", "0.35em")
-        .text(`${percentage}%`)
+        .text(`${d.DjokovicData}`)
         .style("font-weight", "bold")
         .style("font-size", "14px");
     }
 
-    function handleMouseOut(d) {
+  function handleMouseOut(d) {
       d3.select(this)
         .select(".pie-slice")
         .transition()
@@ -410,6 +401,8 @@ d3.json("events.json")
 
 });
 
+
+////vrijeme poena
 
 function lineChart(){
 var time=[];
@@ -459,39 +452,25 @@ function createLinechart(time){
     .padding(0.1);
     
 
-
   const yScale = d3.scaleLinear()
     .domain([0, d3.max(time, d => d.totaltime)])
     .range([chartHeight, 0]);
-
-  
-    
-
 
   const line = d3.line()
     .x(d => xScale(d.rallyid) + xScale.bandwidth() / 2)
     .y(d => yScale(d.totaltime));
 
 
-
-
-
-
-
-    function updateLinechart(time) {
+  function updateLinechart(time) {
       
-      
-
     chart.append("g")
-    .attr("class", "x-axis")
-    .attr("transform", `translate(0, ${chartHeight})`)
-    .call(d3.axisBottom(xScale).tickValues(xScale.domain().filter((d, i) => (i + 1) % 5 === 0)));
-
- 
-      
+      .attr("class", "x-axis")
+      .attr("transform", `translate(0, ${chartHeight})`)
+      .call(d3.axisBottom(xScale).tickValues(xScale.domain().filter((d, i) => (i + 1) % 5 === 0)));
 
 
-      chart.append("path")
+
+    chart.append("path")
       .datum(time)
       .attr("fill", "none")
       .attr("stroke", "steelblue")
@@ -563,63 +542,39 @@ function createLinechart(time){
   
     }
 
-    function handleButtonClick2(buttonId) {
+  function handleButtonClick2(buttonId) {
       if (buttonId === "button-1stset") {
         chart.selectAll(".line")
-      .transition()
-      .duration(500)
-      .attr("opacity", 0)
-      .remove();
-    chart.selectAll(".axis")
-      .remove();
-    chart.selectAll(".data-point")
-      .remove();
-
-    chart.selectAll(".text")
-      .remove();
-
-    
-    chart.selectAll(".x-axis")
-      .remove();
-
+          .transition()
+          .duration(500)
+          .attr("opacity", 0)
+          .remove();
+        chart.selectAll(".data-point")
+          .remove();
+        chart.selectAll(".text")
+          .remove();
         updateLinechart(set1);
       } else if (buttonId === "button-2ndset"){
         chart.selectAll(".line")
-      .transition()
-      .duration(500)
-      .attr("opacity", 0)
-      .remove();
-    chart.selectAll(".axis")
-      .remove();
-    chart.selectAll(".data-point")
-      .remove();
-
-    chart.selectAll(".text")
-      .remove();
-
-    
-    chart.selectAll(".x-axis")
-      .remove();
-
+          .transition()
+          .duration(500)
+          .attr("opacity", 0)
+          .remove();
+        chart.selectAll(".data-point")
+          .remove();
+        chart.selectAll(".text")
+          .remove();    
         updateLinechart(set2);
       } else if (buttonId === "button-3rdset"){
         chart.selectAll(".line")
-      .transition()
-      .duration(500)
-      .attr("opacity", 0)
-      .remove();
-    chart.selectAll(".axis")
-      .remove();
-    chart.selectAll(".data-point")
-      .remove();
-
-    chart.selectAll(".text")
-      .remove();
-
-    
-    chart.selectAll(".x-axis")
-      .remove();
-
+          .transition()
+          .duration(500)
+          .attr("opacity", 0)
+          .remove();
+        chart.selectAll(".data-point")
+          .remove();
+        chart.selectAll(".text")
+          .remove();
         updateLinechart(set3);
       }
       
