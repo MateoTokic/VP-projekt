@@ -1,4 +1,4 @@
-# Vizualizacija podataka - projekt
+# Vizualizacija podataka/Data visualization - project
 
 This project shows data visualization of the AO-2019 final match between Novak Djokovic and Rafael Nadal. 
 It enables easier analysis of match statistics.
@@ -21,7 +21,7 @@ Nadal:
 ![image](https://github.com/MateoTokic/VP-projekt/assets/73400469/b51274ec-bb7c-40b0-aca1-b70ba783c022)
 
 
-Statistic:
+Statistics:
 ![image](https://github.com/MateoTokic/VP-projekt/assets/73400469/e9ab4b5d-f9e3-4064-9d6a-445dfb756719)
 
 
